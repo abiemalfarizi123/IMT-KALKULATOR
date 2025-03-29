@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator IMT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, select, button {
+            width: 100%;
+            margin: 5px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Kalkulator Indeks Massa Tubuh (IMT)</h2>
+        <input type="text" id="nama" placeholder="Masukkan Nama">
+        <select id="gender">
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+        </select>
+        <input type="number" id="umur" placeholder="Masukkan Umur">
+        <input type="number" id="berat" placeholder="Masukkan Berat (kg)">
+        <input type="number" id="tinggi" placeholder="Masukkan Tinggi (cm)">
+        <button onclick="hitungIMT()">Hitung IMT</button>
+        <h3 id="hasil"></h3>
+    </div>
+
+    <script>
+        function hitungIMT() {
+            var nama = document.getElementById("nama").value;
+            var gender = document.getElementById("gender").value;
+            var umur = document.getElementById("umur").value;
+            var berat = parseFloat(document.getElementById("berat").value);
+            var tinggi = parseFloat(document.getElementById("tinggi").value) / 100;
+
+            if (nama === "" || isNaN(berat) || isNaN(tinggi) || isNaN(umur)) {
+                alert("Mohon isi semua data dengan benar!");
+                return;
+            }
+
+            var imt = berat / (tinggi * tinggi);
+            var status = "";
+
+            if (imt < 18.5) {
+                status = "Kekurangan Berat Badan";
+            } else if (imt >= 18.5 && imt < 24.9) {
+                status = "Normal";
+            } else if (imt >= 25 && imt < 29.9) {
+                status = "Kelebihan Berat Badan";
+            } else {
+                status = "Obesitas";
+            }
+
+            document.getElementById("hasil").innerHTML = 
+                `${nama} (${gender}, ${umur} tahun)<br>IMT: ${imt.toFixed(2)} - ${status}`;
+        }
+    </script>
+</body>
+</html>
